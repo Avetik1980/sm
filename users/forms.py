@@ -20,3 +20,15 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['profile_picture', 'twitter_id', 'facebook_id', 'instagram_id', 'reddit_id', 'phone_number']
+
+class SearchForm(forms.Form):
+    SOCIAL_CHOICES = (
+        ('all', 'All'),
+        ('fb', 'Facebook'),
+        ('ig', 'Instagram'),
+        ('tw', 'Twitter'),
+        ('rd', 'Reddit'),
+    )
+
+    username = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'placeholder': 'Username'}))
+    social_network = forms.ChoiceField(choices=SOCIAL_CHOICES, required=False)

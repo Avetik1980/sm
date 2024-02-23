@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, SearchForm
 from django.contrib.auth.decorators import login_required
 
 def register(request):
@@ -35,3 +35,17 @@ def profile(request):
     }
 
     return render(request, 'users/profile.html', context)
+
+def search(request):
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            # Process the search
+            username = form.cleaned_data['username']
+            social_network = form.cleaned_data['social_network']
+            # For now, let's just redirect to the homepage or render some results template
+            # In the real scenario, you would search your database or make API calls
+            return render(request, 'users/search_results.html', {'username': username, 'social_network': social_network})
+    else:
+        form = SearchForm()
+    return render(request, 'users/search.html', {'form': form})
