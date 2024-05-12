@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Search</title>
+    <title>Search for Users</title>
 </head>
 <body>
     <h1>Search for Users</h1>
@@ -10,11 +10,19 @@
         {{ form.as_p }}
         <button type="submit">Search</button>
     </form>
-    {% if results %}
+
+    {% if results is not None %}
         <h2>Results:</h2>
         <ul>
             {% for user_profile in results %}
-                <li>{{ user_profile.user.username }} - {{ user_profile.get_social_network_display }}</li>
+                <li>
+                    {{ user_profile.user.username }} -
+                    {% if user_profile.facebook_id %} Facebook: {{ user_profile.facebook_id }} {% endif %}
+                    {% if user_profile.instagram_id %} Instagram: {{ user_profile.instagram_id }} {% endif %}
+                    {% if user_profile.twitter_id %} Twitter: {{ user_profile.twitter_id }} {% endif %}
+                    {% if user_profile.reddit_id %} Reddit: {{ user_profile.reddit_id }} {% endif %}
+                    <a href="{% url 'send_request' user_profile.user.id %}">Request Details</a>
+                </li>
             {% empty %}
                 <li>No users found.</li>
             {% endfor %}

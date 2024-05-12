@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Send Request to {{ recipient.username }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Send Request</button>
+  </form>
+{% endblock %}

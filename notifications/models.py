@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
+
 
 class Notification(models.Model):
     # Link to the User model
@@ -14,3 +16,13 @@ class Notification(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+
+class DetailRequest(models.Model):
+    sender = models.ForeignKey(User, related_name='sent_requests', on_delete=models.CASCADE)
+    recipient = models.ForeignKey(User, related_name='received_requests', on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    accepted = models.BooleanField(default=False)
+    rejected = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'Request from {self.sender.username} to {self.recipient.username}'

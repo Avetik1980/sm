@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Respond to Request from {{ detail_request.sender.username }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    <button name="response" value="accept" type="submit">Accept</button>
+    <button name="response" value="reject" type="submit">Reject</button>
+  </form>
+{% endblock %}
