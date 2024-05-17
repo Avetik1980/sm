@@ -1,0 +1,19 @@
+<!-- users/templates/users/donators.html -->
+{% extends "base.html" %}
+
+{% block title %}My Donators{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>My Donators</h2>
+    <ul>
+        {% for request in requests %}
+        <li>
+            {{ request.sender.username }}
+        </li>
+        {% empty %}
+        <li>No donators found.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -32,3 +32,10 @@ def respond_request(request, request_id, response):
 
     detail_request.save()
     return redirect('profile')
+
+def notifications(request):
+    received_requests = request.user.received_requests.filter(viewed=False)
+    for detail_request in received_requests:
+        detail_request.viewed = True
+        detail_request.save()
+    return render(request, 'notifications/notifications.html', {'requests': received_requests})

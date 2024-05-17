@@ -1,26 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Profile</title>
-</head>
-<body>
-    <div class="container">
-        <h2>Update Profile</h2>
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">User Info</legend>
-                {{ u_form|crispy }}
-            </fieldset>
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Profile Info</legend>
-                {{ p_form|crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button type="submit" class="btn btn-outline-info">Update</button>
-            </div>
-        </form>
-    </div>
-</body>
-</html>
+<!-- users/templates/users/profile.html -->
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Update Profile</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">User Info</legend>
+            {{ u_form|crispy }}
+        </fieldset>
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Profile Info</legend>
+            {{ p_form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button type="submit" class="btn btn-outline-info">Update</button>
+        </div>
+    </form>
+
+    <h3>Accepted Requests</h3>
+    <ul>
+        {% for request in accepted_requests %}
+        <li>
+            {{ request.sender.username }} requested your details and you accepted.
+        </li>
+        {% empty %}
+        <li>No accepted requests.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

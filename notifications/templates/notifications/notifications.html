@@ -1,0 +1,22 @@
+<!-- notifications/templates/notifications/notifications.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Notifications</h2>
+    <ul>
+        {% for request in requests %}
+        <li>
+            {{ request.sender.username }} has requested your details.
+            <a href="{% url 'respond_request' request.id 'accept' %}" class="btn btn-success">Accept</a>
+            <a href="{% url 'respond_request' request.id 'reject' %}" class="btn btn-danger">Reject</a>
+        </li>
+        {% empty %}
+        <li>No new notifications.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
